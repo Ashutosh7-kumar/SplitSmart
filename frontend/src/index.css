@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f6f9fb;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 4rem;
+  background: #f6f9fb;
+  flex-wrap: nowrap;
+  overflow: auto;
+}
+
+@media (max-width: 1200px) {
+  .app-container {
+    gap: 3rem;
+    padding: 1.8rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .app-container {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 1.5rem;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+    padding: 1.2rem;
+    gap: 2rem;
+    height: auto;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+}
+
+/* Global semantic buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-blue {
+  background: #2563eb;
+  border-color: #1d4ed8;
+}
+.btn-blue:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.btn-green {
+  background: #16a34a;
+  border-color: #15803d;
+}
+.btn-green:hover:not(:disabled) {
+  background: #15803d;
+}
+
+.btn-red {
+  background: #dc2626;
+  border-color: #b91c1c;
+}
+.btn-red:hover:not(:disabled) {
+  background: #b91c1c;
+}
