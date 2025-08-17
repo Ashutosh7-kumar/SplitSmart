@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import './LoginForm.css';
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 const LoginForm = ({ onLogin, onSwitchToSignup }) => {
   const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ const LoginForm = ({ onLogin, onSwitchToSignup }) => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(`${API_BASE}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

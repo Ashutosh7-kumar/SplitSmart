@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 import AddExpenseModal from "./AddExpenseModal";
 import "./Groups.css";
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const Groups = () => {
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +34,7 @@ const Groups = () => {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:5000/api/groups", {
+      const response = await fetch(`${API_BASE}/api/groups`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (!response.ok) throw new Error("Failed to fetch groups");
@@ -52,7 +54,7 @@ const Groups = () => {
   const fetchGroupExpenses = async (groupId) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/api/expenses?groupId=${groupId}`, {
+      const response = await fetch(`${API_BASE}/api/expenses?groupId=${groupId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (!response.ok) throw new Error("Failed to fetch group expenses");
@@ -95,7 +97,7 @@ const Groups = () => {
   const markShareAsPaid = async (expenseId, shareIndex) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/api/expenses/${expenseId}/mark-paid`, {
+      const response = await fetch(`${API_BASE}/api/expenses/${expenseId}/mark-paid`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -129,7 +131,7 @@ const Groups = () => {
       const token = localStorage.getItem("token");
       const groupCode = newGroupData.groupCode || "";
       
-      const response = await fetch("http://localhost:5000/api/groups", {
+      const response = await fetch(`${API_BASE}/api/groups`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -163,7 +165,7 @@ const Groups = () => {
     }
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/api/groups/join/${groupCode.trim().toUpperCase()}`, {
+      const response = await fetch(`${API_BASE}/api/groups/join/${groupCode.trim().toUpperCase()}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -219,7 +221,7 @@ const Groups = () => {
       console.log('Attempting to delete group:', selectedGroup._id);
       console.log('Token exists:', !!token);
       
-      const response = await fetch(`http://localhost:5000/api/groups/${selectedGroup._id}`, {
+      const response = await fetch(`${API_BASE}/api/groups/${selectedGroup._id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

@@ -5,6 +5,8 @@ import RecentExpenses from "./RecentExpenses";
 import AddExpenseModal from "./AddExpenseModal";
 import "./Dashboard.css";
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,7 +42,7 @@ const Dashboard = () => {
       const userId = localStorage.getItem('userId');
       
       // Fetch all expenses
-      const expensesResponse = await fetch('http://localhost:5000/api/expenses', {
+      const expensesResponse = await fetch(`${API_BASE}/api/expenses`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -53,7 +55,7 @@ const Dashboard = () => {
       }
 
       // Fetch groups
-      const groupsResponse = await fetch('http://localhost:5000/api/groups', {
+      const groupsResponse = await fetch(`${API_BASE}/api/groups`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -72,7 +74,7 @@ const Dashboard = () => {
       const debtInfo = await fetchDebtInfo(token);
       
       // Fetch budget data for percentage calculation
-      const budgetResponse = await fetch(`http://localhost:5000/api/budgets/vs-actual?month=${new Date().toISOString().slice(0, 7)}`, {
+      const budgetResponse = await fetch(`${API_BASE}/api/budgets/vs-actual?month=${new Date().toISOString().slice(0, 7)}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -190,7 +192,7 @@ const Dashboard = () => {
   const fetchDebtInfo = async (token) => {
     try {
       // Fetch debt summary based on individual shares
-      const debtResponse = await fetch('http://localhost:5000/api/expenses/debt-summary', {
+      const debtResponse = await fetch(`${API_BASE}/api/expenses/debt-summary`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

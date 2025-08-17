@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaTimes, FaUpload, FaEye, FaTrash } from 'react-icons/fa';
 import './AddExpenseModal.css';
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
 const AddExpenseModal = ({ isOpen, onClose, onExpenseAdded, groups }) => {
   const [formData, setFormData] = useState({
     title: '',
@@ -77,7 +78,7 @@ const AddExpenseModal = ({ isOpen, onClose, onExpenseAdded, groups }) => {
       const token = localStorage.getItem('token');
       const formDataUpload = new FormData();
       formDataUpload.append('receipt', selectedFile);
-      const response = await fetch('http://localhost:5000/api/upload/receipt', {
+      const response = await fetch(`${API_BASE}/api/upload/receipt`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -125,7 +126,7 @@ const AddExpenseModal = ({ isOpen, onClose, onExpenseAdded, groups }) => {
         receiptURL: receiptURL,
         createdAt: formData.date
       };
-      const response = await fetch('http://localhost:5000/api/expenses', {
+      const response = await fetch(`${API_BASE}/api/expenses`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -310,7 +311,7 @@ const AddExpenseModal = ({ isOpen, onClose, onExpenseAdded, groups }) => {
                       className="action-btn view-btn"
                       onClick={() => {
                         if (uploadedFile) {
-                          window.open(`http://localhost:5000${uploadedFile}`, '_blank');
+                          window.open(`${API_BASE}${uploadedFile}`, '_blank');
                         }
                       }}
                       title="View File"

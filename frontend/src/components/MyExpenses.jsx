@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 import AddExpenseModal from "./AddExpenseModal";
 import "./MyExpenses.css";
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const MyExpenses = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -25,7 +27,7 @@ const MyExpenses = () => {
       const params = new URLSearchParams();
       if (searchTerm) params.append("search", searchTerm);
       if (categoryFilter !== "all") params.append("category", categoryFilter);
-      const response = await fetch(`http://localhost:5000/api/expenses?${params.toString()}`, {
+      const response = await fetch(`${API_BASE}/api/expenses?${params.toString()}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (!response.ok) throw new Error("Failed to fetch expenses");
@@ -42,7 +44,7 @@ const MyExpenses = () => {
   const fetchGroups = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch('http://localhost:5000/api/groups', {
+      const response = await fetch(`${API_BASE}/api/groups`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) {
@@ -61,7 +63,7 @@ const MyExpenses = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/api/expenses/${expenseId}`, {
+      const response = await fetch(`${API_BASE}/api/expenses/${expenseId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -85,7 +87,7 @@ const MyExpenses = () => {
       
       // Delete all expenses one by one
       const deletePromises = expenses.map(expense => 
-        fetch(`http://localhost:5000/api/expenses/${expense._id}`, {
+        fetch(`${API_BASE}/api/expenses/${expense._id}`, {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }
         })
@@ -176,7 +178,7 @@ const MyExpenses = () => {
                   <td>{expense.groupId ? 'Group' : 'Personal'}</td>
                   <td>{new Date(expense.createdAt).toLocaleDateString()}</td>
                   <td>₹{expense.amount?.toFixed(2)}</td>
-                  <td>{expense.receiptURL ? <a href={expense.receiptURL.startsWith('http') ? expense.receiptURL : `http://localhost:5000${expense.receiptURL}`} target="_blank" rel="noopener noreferrer">📎</a> : "—"}</td>
+                  <td>{expense.receiptURL ? <a href={expense.receiptURL.startsWith('http') ? expense.receiptURL : `${API_BASE}${expense.receiptURL}`} target="_blank" rel="noopener noreferrer">📎</a> : "—"}</td>
                   <td>
                     <button 
                       onClick={() => deleteExpense(expense._id)}

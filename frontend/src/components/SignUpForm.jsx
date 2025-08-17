@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import './SignUpForm.css';
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 const SignUpForm = ({ onSignup, onSwitchToLogin }) => {
   const [formData, setFormData] = useState({
@@ -44,7 +45,7 @@ const SignUpForm = ({ onSignup, onSwitchToLogin }) => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/signup', {
+      const response = await fetch(`${API_BASE}/api/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -156,7 +157,6 @@ const SignUpForm = ({ onSignup, onSwitchToLogin }) => {
               </button>
           </div>
         </div>
-
           {error && (
             <div className="error-message">
               {error}

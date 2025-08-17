@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from 'react-toastify';
 import "./Budget.css";
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 const Budget = () => {
   const [budgets, setBudgets] = useState([]);
@@ -20,7 +21,7 @@ const Budget = () => {
       const currentMonth = new Date().toISOString().slice(0, 7);
       
       // Fetch budget vs actual data
-      const response = await fetch(`http://localhost:5000/api/budgets/vs-actual?month=${currentMonth}`, {
+      const response = await fetch(`${API_BASE}/api/budgets/vs-actual?month=${currentMonth}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       
@@ -43,7 +44,7 @@ const Budget = () => {
     
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:5000/api/budgets", {
+      const response = await fetch(`${API_BASE}/api/budgets`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +82,7 @@ const Budget = () => {
       const currentMonth = new Date().toISOString().slice(0, 7);
       
       // Get all budgets for current month
-      const response = await fetch(`http://localhost:5000/api/budgets?month=${currentMonth}`, {
+      const response = await fetch(`${API_BASE}/api/budgets?month=${currentMonth}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       
@@ -90,7 +91,7 @@ const Budget = () => {
       
       // Delete each budget
       const deletePromises = budgetsToDelete.map(budget => 
-        fetch(`http://localhost:5000/api/budgets/${budget._id}`, {
+        fetch(`${API_BASE}/api/budgets/${budget._id}`, {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }
         })
@@ -180,6 +181,8 @@ const Budget = () => {
             <option value="Transport">🚗 Transport</option>
             <option value="Shopping">🛒 Shopping</option>
             <option value="Healthcare">⚕️ Healthcare</option>
+            <option value="Education">🎓 Education</option>
+            <option value="Other">📦 Other</option>
           </select>
           <input
             type="number"

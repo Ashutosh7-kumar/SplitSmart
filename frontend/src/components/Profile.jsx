@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "./Profile.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);

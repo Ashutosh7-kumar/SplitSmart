@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import "./Navbar.css";
 import NotificationsPanel from "./NotificationsPanel";
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const Navbar = ({ onLogout }) => {
   const location = useLocation();
   const [userData, setUserData] = useState({
@@ -48,7 +50,7 @@ const Navbar = ({ onLogout }) => {
       setLoadingNotifications(true);
       const token = localStorage.getItem("token");
       if (!token) return;
-      const res = await fetch("http://localhost:5000/api/notifications", {
+      const res = await fetch(`${API_BASE}/api/notifications`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -99,7 +101,7 @@ const Navbar = ({ onLogout }) => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const response = await fetch("http://localhost:5000/api/auth/me", {
+      const response = await fetch(`${API_BASE}/api/auth/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -142,7 +144,7 @@ const Navbar = ({ onLogout }) => {
       if (!token) return;
 
       const response = await fetch(
-        "http://localhost:5000/api/notifications/unread-count",
+        `${API_BASE}/api/notifications/unread-count`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -169,7 +171,7 @@ const Navbar = ({ onLogout }) => {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/expenses/export-csv",
+        `${API_BASE}/api/expenses/export-csv`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -210,7 +212,7 @@ const Navbar = ({ onLogout }) => {
       const token = localStorage.getItem("token");
       if (!token) return;
       const res = await fetch(
-        `http://localhost:5000/api/notifications/${notificationId}/read`,
+        `${API_BASE}/api/notifications/${notificationId}/read`,
         { method: "PATCH", headers: { Authorization: `Bearer ${token}` } }
       );
       if (res.ok) {
@@ -278,7 +280,7 @@ const Navbar = ({ onLogout }) => {
                 {loading ? (
                   <div className="avatar-loading">...</div>
                 ) : userData.avatarUrl ? (
-                  <img src={`http://localhost:5000${userData.avatarUrl}`} alt="User" />
+                  <img src={`${API_BASE}${userData.avatarUrl}`} alt="User" />
                 ) : (
                   <div className="avatar-fallback">
                     {userData.name?.charAt(0).toUpperCase()}
@@ -348,7 +350,7 @@ const Navbar = ({ onLogout }) => {
               {loading ? (
                 <div className="avatar-loading">...</div>
               ) : userData.avatarUrl ? (
-                <img src={`http://localhost:5000${userData.avatarUrl}`} alt="User" />
+                <img src={`${API_BASE}${userData.avatarUrl}`} alt="User" />
               ) : (
                 <div className="avatar-fallback">
                   {userData.name?.charAt(0).toUpperCase()}

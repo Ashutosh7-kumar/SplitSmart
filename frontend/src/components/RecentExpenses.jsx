@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import "./RecentExpenses.css";
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 const RecentExpenses = () => {
   const [expenses, setExpenses] = useState([]);
@@ -12,7 +13,7 @@ const RecentExpenses = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch("http://localhost:5000/api/expenses", {
+      const res = await fetch(`${API_BASE}/api/expenses`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
