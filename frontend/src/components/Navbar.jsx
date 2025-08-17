@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Bell, Settings, LogOut, User, Download, Menu, X } from "lucide-react";
 import { toast } from "react-toastify";
+import { getAvatarUrl, getAvatarFallbackInitial } from "../utils/avatar";
 import "./Navbar.css";
 import NotificationsPanel from "./NotificationsPanel";
 
@@ -279,11 +280,11 @@ const Navbar = ({ onLogout }) => {
               <div className="avatar">
                 {loading ? (
                   <div className="avatar-loading">...</div>
-                ) : userData.avatarUrl ? (
-                  <img src={`${API_BASE}${userData.avatarUrl}`} alt="User" />
+                ) : getAvatarUrl(userData) ? (
+                  <img src={getAvatarUrl(userData)} alt="User" />
                 ) : (
                   <div className="avatar-fallback">
-                    {userData.name?.charAt(0).toUpperCase()}
+                    {getAvatarFallbackInitial(userData)}
                   </div>
                 )}
               </div>
@@ -349,11 +350,11 @@ const Navbar = ({ onLogout }) => {
             <div className="avatar">
               {loading ? (
                 <div className="avatar-loading">...</div>
-              ) : userData.avatarUrl ? (
-                <img src={`${API_BASE}${userData.avatarUrl}`} alt="User" />
+              ) : getAvatarUrl(userData) ? (
+                <img src={getAvatarUrl(userData)} alt="User" />
               ) : (
                 <div className="avatar-fallback">
-                  {userData.name?.charAt(0).toUpperCase()}
+                  {getAvatarFallbackInitial(userData)}
                 </div>
               )}
             </div>

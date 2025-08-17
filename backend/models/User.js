@@ -11,7 +11,8 @@ const UserSchema = new mongoose.Schema({
   },
   passwordHash: { 
     type: String, 
-    required: true
+    required: false, // Optional to support OAuth-based accounts
+    default: ''
   },
   name: {
     type: String,
@@ -24,6 +25,15 @@ const UserSchema = new mongoose.Schema({
     trim: true
   },
   avatarUrl: {
+    type: String,
+    default: ''
+  },
+  provider: {
+    type: String,
+    enum: ['local', 'google'],
+    default: 'local'
+  },
+  googleId: {
     type: String,
     default: ''
   },
@@ -74,4 +84,5 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 const User = mongoose.model("User", UserSchema);
-export default User; 
+export default User;
+ 

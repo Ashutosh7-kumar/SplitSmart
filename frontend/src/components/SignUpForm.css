@@ -1,11 +1,20 @@
 .signup-container {
-  min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* start from top so content isn't hidden under sticky navbar */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
+  /* Use dynamic viewport height to avoid mobile browser UI issues */
+  min-height: 100dvh;
+  /* Add top padding to avoid being hidden under sticky navbar and handle safe areas */
+  padding: calc(env(safe-area-inset-top, 0px) + 90px) 20px 24px 20px;
   box-sizing: border-box;
+}
+
+/* On small screens, add extra top padding to clear sticky navbar and safe areas */
+@media (max-width: 768px) {
+  .signup-container {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 90px);
+  }
 }
 
 .signup-card {
@@ -53,14 +62,15 @@
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  
   width: 100%;
+  margin-bottom: 0.5rem;
 }
 
 .form-group label {
@@ -149,6 +159,31 @@
   border: 1px solid #fed7d7;
   text-align: center;
   word-break: break-word;
+}
+
+.social-auth {
+  margin-top: 18px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e1e5e9;
+}
+
+.divider span {
+  color: #888;
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 .signup-footer {

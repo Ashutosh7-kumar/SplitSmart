@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { OAuth2Client } from "google-auth-library";
 
 // Generate JWT Token
 const generateToken = (userId) => {
@@ -219,4 +220,75 @@ export const verifyToken = async (req, res) => {
       message: "Invalid token" 
     });
   }
-}; 
+};
+
+// @desc    Google OAuth sign-in/up
+// @route   POST /api/auth/google
+// @access  Public
+export const googleAuth = async (req, res) => {
+  try {
+    const { credential } = req.body;
+
+    if (!credential) {
+      return res.status(400).json({ message: "Missing Google credential" });
+    }
+
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    if (!clientId) {
+      return res.status(500).json({ message: "Server misconfiguration: GOOGLE_CLIENT_ID not set" });
+    }
+
+    const client = new OAuth2Client(clientId);
+    const ticket = await client.verifyIdToken({ idToken: credential, audience: clientId });
+    const payload = ticket.getPayload();
+
+    const googleId = payload.sub;
+    const email = payload.email;
+    const name = payload.name || email.split('@')[0];
+    const picture = payload.picture || '';
+
+    if (!email) {
+      return res.status(400).json({ message: "Google account does not have a public email" });
+    }
+
+    // Find existing user by googleId or email
+    let user = await User.findOne({ $or: [{ googleId }, { email }] });
+
+    if (!user) {
+      // Create a new user with provider google
+      user = new User({
+        email,
+        passwordHash: '',
+        name,
+        avatarUrl: picture,
+        provider: 'google',
+        googleId
+      });
+      await user.save();
+    } else {
+      // Ensure provider/ids are updated if user existed from local signup
+      if (!user.googleId) user.googleId = googleId;
+      if (!user.avatarUrl && picture) user.avatarUrl = picture;
+      if (user.provider !== 'google') user.provider = 'google';
+      await user.save();
+    }
+
+    const token = generateToken(user._id);
+
+    return res.json({
+      success: true,
+      message: 'Google authentication successful',
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        phone: user.phone || '',
+        avatarUrl: user.avatarUrl || ''
+      }
+    });
+  } catch (error) {
+    console.error('Google auth error:', error);
+    return res.status(401).json({ message: 'Invalid Google credential' });
+  }
+};

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { getAvatarUrl, getAvatarFallbackInitial } from "../utils/avatar";
 import "./Profile.css";
 
 const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
@@ -229,10 +231,10 @@ const Profile = () => {
           <h2>Profile</h2>
           <div className="avatar-row">
             <div className="avatar-large">
-              {user.avatarUrl ? (
-                <img src={`${API_BASE}${user.avatarUrl}`} alt="avatar" />
+              {getAvatarUrl(user) ? (
+                <img src={getAvatarUrl(user)} alt="avatar" />
               ) : (
-                <div className="avatar-fallback">{(user.name || "U").charAt(0).toUpperCase()}</div>
+                <div className="avatar-fallback">{getAvatarFallbackInitial(user)}</div>
               )}
             </div>
             <form className="avatar-form" onSubmit={onSubmitAvatar}>
