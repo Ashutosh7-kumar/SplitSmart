@@ -57,7 +57,7 @@ const App = () => {
   // Main app with routing and Navbar
   return (
     <Router>
-      <Navbar onLogout={handleLogout} />
+      < Navbar onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={
           <ProtectedRoute>

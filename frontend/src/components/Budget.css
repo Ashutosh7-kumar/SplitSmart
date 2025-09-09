@@ -211,5 +211,9 @@ body {
 
   .summary-cards {
     flex-direction: column;
+    
   }
+  .summary-card {
+  flex: 1 1 20px;
+}
 }

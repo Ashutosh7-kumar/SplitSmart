@@ -295,3 +295,8 @@ tbody tr:hover {
   td:nth-of-type(6)::before { content: "Receipt"; }
   td:nth-of-type(7)::before { content: "Actions"; }
 }
+@media (max-width: 768px) {
+  thead {
+    display: none; /* ✅ Hide table header in mobile */
+  }
+}

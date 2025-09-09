@@ -500,7 +500,7 @@
 }
 
 @media (max-width: 700px) {
-  .navbar-container { padding: 0 1rem; }
+  .navbar-container { padding: 0 0.5rem; }
   
   /* Hide desktop nav on mobile */
   .nav-links { display: none; }

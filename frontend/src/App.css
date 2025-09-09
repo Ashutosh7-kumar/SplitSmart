@@ -9,18 +9,16 @@ body {
   height: 100vh;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
   gap: 4rem;
   background: #f6f9fb;
   flex-wrap: nowrap;
-  overflow: auto;
+  overflow: hidden;
 }
 
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .app-container {
     gap: 3rem;
-    padding: 1.8rem;
   }
 }
 
@@ -28,7 +26,6 @@ body {
   .app-container {
     flex-wrap: wrap;
     height: auto;
-    padding: 1.5rem;
     gap: 2.5rem;
   }
 }
@@ -36,7 +33,6 @@ body {
 @media (max-width: 768px) {
   .app-container {
     flex-direction: column;
-    padding: 1.2rem;
     gap: 2rem;
     height: auto;
     justify-content: flex-start;
@@ -45,7 +41,6 @@ body {
 
 @media (max-width: 480px) {
   .app-container {
-    padding: 1rem;
     gap: 1.5rem;
   }
 }

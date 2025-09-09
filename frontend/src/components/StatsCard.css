@@ -243,3 +243,22 @@
     font-size: 0.75rem;
   }
 }
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr; /* collapse to single column */
+  }
+}
+@media (max-width: 768px) {
+  .card {
+    flex: 1 1 100%; /* full width on mobile */
+  }
+}
+@media (max-width: 480px) {
+  body {
+    font-size: 0.9rem;
+  }
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+}
