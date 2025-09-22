@@ -13,6 +13,7 @@ const generateToken = (userId) => {
   });
 };
 
+
 // @desc    Register new user
 // @route   POST /api/auth/signup
 // @access  Public
